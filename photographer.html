@@ -1,0 +1,90 @@
+<script  src="scripts/templates/photographer/contact.js"></script>
+<script  src="scripts/templates/photographer/profil.js"></script>
+<script  src="scripts/templates/photographer/gallerie.js"></script>
+<script defer src="scripts/pages/photographer/galleries.js"></script>
+<script defer src="scripts/pages/photographer/likes-price.js"></script>
+<script defer src="scripts/templates/photographer/modalContact.js"></script>
+<script  src="scripts/utils/contactForm.js"></script>
+
+
+<script defer  src="scripts/pages/photographer/photographer.js"></script>
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/19d119da19.js" crossorigin="anonymous"></script>
+    <title>Fisheye - photographe </title>
+  </head>
+  <body>
+    <header>
+      <a href="index.html">
+        <img src="assets/images/logo.png" class="logo" />
+      </a>
+    </header>
+
+
+
+
+    <div class="likes-total">
+      <div class="likes-count">
+        <span id="likes-count"></span> <!-- Le nombre de likes -->
+        <i class="fas fa-heart"></i>
+      </div>
+      <span class="tarif"></span> <!-- Le tarif -->
+    </div>
+    
+
+
+    <section id="main">
+      <div class="photograph-header" id="photograph-header"></div>
+    </section>
+
+    <section class="gallerie">
+      <div class="filter">
+        <h3>Trier par :</h3>
+        <select id="filter" onchange="orderGalleries(this.value)">
+          <option value="popularite">Popularité</option>
+          <option value="date">Date</option>
+          <option value="titre">Titre</option>
+      </select>
+      
+      </div>
+    </section>
+
+    <section class="gallerie-photos" id="gallerie-photos">
+    </section>
+
+    <div id="lightbox-modal"></div>
+			<div class="lightbox-modal">
+
+			</div>
+    </div>
+
+
+    <div id="contact_modal"></div>
+			<div class="modal">
+				<header>
+          <h2>Contactez-moi</h2>
+          <img src="assets/icons/close.svg" onclick="closeModal()" />
+        </header>
+				<!-- <form>
+					<div>
+						<h3 id="prenom-contact"></h3>
+						<input />
+					</div>
+          <button class="contact_button">Envoyer</button>
+				</form> -->
+			</div>
+		</div>
+        
+  </body>
+
+  
+</html>
