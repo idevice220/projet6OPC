@@ -209,7 +209,8 @@ form input {
     height: 400px;
 }
 
-.gallery-item img{
+.gallery-item img,
+.gallery-video{
     width: 100%;
     min-height: 400px;
     border-radius: 5px;

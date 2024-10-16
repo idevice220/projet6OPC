@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     initGallery();  // Charger la galerie et appliquer le tri dès le chargement de la page
 });
 
+const selectedFilter = document.getElementById('filter');
+
+selectedFilter.addEventListener('change', (event) => {
+    const selectedOrder = event.target.value;
+    orderGalleries(selectedOrder); // Trier les images selon la sélection
+});
 
 
 
@@ -51,7 +57,6 @@ async function getPhotos() {
         return media.photographerId === photographerId;
     });
 
-    console.log('Media retrieved:', profils_media); // Vérifiez les médias récupérés
     return {
         media: profils_media
     };
@@ -81,7 +86,6 @@ async function displayMedia(mediaArray) {
 
 
 function orderGalleries(order) {
-    // console.log('Sorting galleries by:', order); 
     if (order === "popularite") {
         mediaArray.sort((a, b) => b.likes - a.likes);
     } else if (order === "date") {
@@ -91,5 +95,6 @@ function orderGalleries(order) {
     }
     displayMedia(mediaArray);  
 }
+
 
 

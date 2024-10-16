@@ -88,8 +88,6 @@ function photographerTemplateName(data) {
         return photographer.id === getPhotographerIdFromUrl();
     }
     );
-    console.log("photographers filtré :", filterPhotographersName);
-
         return ({
             photographers: filterPhotographersName //je retourne les données des photographes
         })

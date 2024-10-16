@@ -1,9 +1,11 @@
 // scripts/templates/gallerie.js
 
 function galleryTemplate(data) {
-    const { photographerId, image, title, likes, tags } = data;
+    const { photographerId, image, video, title, likes } = data;
 
-    if (!photographerId || !image) {
+    const media = image || video; // Utilisez l'image si elle existe, sinon la vidéo
+
+    if (!photographerId || !media) {
         console.error("photographerId ou image manquants pour cet élément de média:", data);
         return null; // Si les valeurs manquent, on retourne null
     }
@@ -23,9 +25,19 @@ function galleryTemplate(data) {
     const divGallery = document.createElement("div");
     divGallery.classList.add("gallery-item");
 
-    const img = document.createElement("img");
-    img.setAttribute("src", `assets/${photographerId}/${image}`);
-    img.setAttribute("alt", title);
+    
+    if (media.endsWith(".mp4")) {
+        var videoGallery = document.createElement("video");
+        videoGallery.src = `assets/${photographerId}/${media}`;
+        videoGallery.setAttribute("alt", title);
+        videoGallery.setAttribute("controls", true);
+        videoGallery.classList.add("gallery-video");
+        // img.style.display = "none"; // Cache l'image si la vidéo est présente
+    } else {
+        var img = document.createElement("img");
+        img.src = `assets/${photographerId}/${media}`;
+        img.setAttribute("alt", title);
+    }
 
     const divGalleryContent = document.createElement("div");
     divGalleryContent.classList.add("gallery-content");
@@ -46,8 +58,7 @@ function galleryTemplate(data) {
     const lightboxImg = document.createElement("img");
     lightboxImg.classList.add("lightbox-img");
     lightboxImg.id = "lightbox-img";
-    // lightboxImg.setAttribute("src", `assets/${photographerId}/${image}` || "https://via.placeholder.com/150");
-    lightboxImg.src = `assets/${photographerId}/${image}` || "https://via.placeholder.com/150";
+    lightboxImg.src = `assets/${photographerId}/${image}`;
     lightboxImg.setAttribute("alt", title) || "Image non trouvée";
 
 
@@ -128,6 +139,17 @@ function galleryTemplate(data) {
     }
 
     // Ajout d'un événement onclick pour gérer les likes/dislikes
+    if (media.endsWith(".mp4")) {
+        videoGallery.addEventListener("click", function() {
+            let clickedImg = videoGallery.getAttribute("src"); //let car la variable peut changer de valeur
+
+            if (!clickedImg) {
+                return;
+            }
+
+            displayLightbox(clickedImg);
+        });
+    } else {
     img.addEventListener("click", function(e) {
         let clickedImg = e.srcElement.currentSrc; //let car la variable peut changer de valeur
 
@@ -137,6 +159,7 @@ function galleryTemplate(data) {
 
         displayLightbox(clickedImg);
     });
+    }
 
     function getPhotographerIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -202,26 +225,17 @@ function galleryTemplate(data) {
     const span = document.createElement("span");
     span.textContent = likes;  // Affiche les likes initiaux
 
-    const ul = document.createElement("ul");
-    ul.classList.add("tags");
 
-    // Assurez-vous que 'tags' est défini avant de boucler dessus
-    if (Array.isArray(tags)) {
-        tags.forEach((tag) => {
-            const li = document.createElement("li");
-            li.textContent = "#" + tag;
-            ul.appendChild(li);
-        });
-    } else {
-        console.warn("Tags non définis pour cet élément de média:", data);
+    if (media.endsWith(".mp4")) {
+        divGallery.appendChild(videoGallery);
     }
-
-    divGallery.appendChild(img);
+    else {
+        divGallery.appendChild(img);
+    }
     divGalleryContent.appendChild(h2);
     divLikes.appendChild(span);  // On place le compteur de likes avant l'icône
     divLikes.appendChild(i);  // On place l'icône après le compteur de likes
     divGalleryContent.appendChild(divLikes);
-    // divGalleryContent.appendChild(ul);
     divGallery.appendChild(divGalleryContent);
     divGallery.prepend(lightboxContent);
     lightboxContent.appendChild(lightboxImg);

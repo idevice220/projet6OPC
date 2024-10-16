@@ -1,6 +1,5 @@
 //pages/photographer/photographer.js
 
-console.log("Le script photographer.js est chargé");
 
 function getPhotographerIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,13 +22,11 @@ async function getProfilsPhotographers() {
         }
 
         const profils_photographers_json = await response.json();
-        console.log("Données JSON récupérées:", profils_photographers_json);
         
         const profils_photographers_all = profils_photographers_json.photographers;
         const profils_photographers = profils_photographers_all.filter((photographer) => {
             return photographer.id === photographerId;
         });
-        console.log("Photographes filtrés:", profils_photographers);
         return { photographers: profils_photographers };
     } catch (error) {
         console.error("Erreur lors de la récupération des données:", error);
@@ -44,7 +41,6 @@ async function init() {
 }
 
 init().then(() => {
-    console.log("Profil chargé, lancement de la galerie");
     initGallery();
 });
 
